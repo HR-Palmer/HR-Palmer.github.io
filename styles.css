@@ -1,0 +1,20 @@
+body {
+    margin: 0; 
+    font-family: Arial;
+    background-color: lightblue;
+}
+
+.navbar {
+    background-color: lightslategray; 
+    padding:10px; 
+    text-align: center; 
+    color:darkblue; 
+    margin: 0%; 
+    font-size: large;
+    
+}
+
+.navlink:hover {
+    color:red;
+    font-size:larger;
+}
