@@ -5,16 +5,66 @@ body {
 }
 
 .navbar {
+    display: flex;
     background-color: lightslategray; 
     padding:10px; 
     text-align: center; 
     color:darkblue; 
     margin: 0%; 
     font-size: large;
+    justify-content: space-around;
     
 }
 
 .navlink:hover {
     color:red;
     font-size:larger;
+}
+
+.navlink {
+    text-decoration: none;
+}
+
+.resume-container {
+    display: flex;
+    justify-content: center;
+    width: 90%;
+    padding: 5%;
+}
+
+.profile {
+    height: 400px;
+    width: 400px;
+    object-fit: cover;
+    border-radius: 200px;
+}
+
+.resume-sections {
+    background-color: darkseagreen;
+    padding: 10px;
+    border-radius: 5%;
+    box-shadow: 10px 10px;
+}
+
+.reference {
+    border: 2;
+    width:300px;
+    height: 100px;
+    border-collapse: collapse;
+
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    padding: 20px;
+}
+
+.galpic {
+    width:400;
+    background-color: aqua;
+    padding: 5%;
+    border-radius:5%;
+    text-align: center;
 }
