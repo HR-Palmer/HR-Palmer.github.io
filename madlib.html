@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Henry Robert Palmer</title>
+        <link rel="stylesheet" href="styles.css">
+    </head>
+    <body>
+        <div class="navbar">
+            <a class="navlink" href="gallery.html">Photo Gallery</a>
+            <a class="navlink" href="resume.html">Resume</a>
+            <a class="navlink" href="index.html">Index</a>
+            <a class="navlink" href="geoquiz.html">Geoquiz</a>
+        </div>
+
+        <!-- WELCOME SCREEN -->
+        <div id="welcomeScreen" style="text-align: center;">
+            <h1>Mad Lib</h1>
+            <p>Play a fun game where you enter words of a certain variety when prompted and it comes together to form a silly story.</p>
+            <button onclick="startGame()">Start Game</button>
+        </div>
+
+        <!-- GAME CONTENT (hidden at start) -->
+        <div id="quizContainer" style="text-align: center; display: none;">
+
+            <h2 id="Enter Word"></h2>
+
+            <input id="answerInput" type="text" placeholder="Enter a word">
+
+            <br><br>
+
+            <button onclick="enterWord()">Submit Answer</button>
+        </div>
+
+        <script>
+            
+        </script>
+    </body>
+</html>
