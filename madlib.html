@@ -20,7 +20,7 @@
         </div>
 
         <!-- GAME CONTENT (hidden at start) -->
-        <div id="quizContainer" style="text-align: center; display: none;">
+        <div id="gameContainer" style="text-align: center; display: none;">
 
             <h2 id="Enter Word"></h2>
 
@@ -28,10 +28,42 @@
 
             <br><br>
 
-            <button onclick="enterWord()">Submit Answer</button>
+            <button onclick="appendAnswer()">Submit Answer</button>
         </div>
-
         <script>
+            function loadPrompt(){
+                let promptWord=quizData[currentQuestion];
+                document.getElementById("Enter Word").innerText="Enter a "+promptWord+".";
+            }
+
+            let currentQuestion=0;
+
+            let quizData = ["adjective","noun","verb","noun","adjective","noun","verb"];
+            let userWords = [];
+
+            function appendAnswer(){
+
+                let userAnswer = document.getElementById("answerInput").value;
+                userWords.push(userAnswer);
+
+                //Clear input
+                document.getElementById("answerInput").value="";
+
+                //Advance to next question
+                currentQuestion++;
+                if (currentQuestion < quizData.length){
+                    loadPrompt();
+                }else{
+                    document.getElementById("Enter Word").innerText="Yesterday, I saw a "+userWords[0]+" "+userWords[1]+" trying to "+userWords[2]+" a giant "+userWords[3]+". It was so "+userWords[4]+" that I accidentally dropped my "+userWords[5]+" and started to "+userWords[6]+"!";
+                }
+            }
+
+            function startGame(){
+                document.getElementById("welcomeScreen").style.display="none";
+                document.getElementById("gameContainer").style.display="block";
+                loadPrompt();
+                
+            }
             
         </script>
     </body>
