@@ -26,7 +26,7 @@
         <script>
             // ===== GLOBALS =====
             let canvas, ctx;
-            let head;
+            let head, snake, apple;
 
             // ===== CLASS =====
             class Head {
@@ -69,12 +69,12 @@
                     );
                 }
 
-                isColliding(bX, bY, bSize) {
+                isColliding(obj) {
                     return (
-                        this.x < bX + bSize &&
-                        this.x + this.size > bX &&
-                        this.y < bY + bSize &&
-                        this.y + this.size > bY
+                        this.x < obj.x + obj.size &&
+                        this.x + this.size > obj.x &&
+                        this.y < obj.y + obj.size &&
+                        this.y + this.size > obj.y
                     );
                 }
             }
@@ -99,11 +99,16 @@
             }
 
             class Apple {
-                constructor(x,y) {
+                constructor(x, y) {
                     this.x = x;
                     this.y = y;
                     this.size = 20;
                     this.color = "red";
+                }
+
+                respawn() {
+                    this.x=Math.floor(Math.random() * 651);
+                    this.y=Math.floor(Math.random() * 401);
                 }
 
                 draw(ctx) {
@@ -123,7 +128,8 @@
                 // cancelAnimationFrame(test);
 
                 head = new Head(200, 200);
-                let snake = [head];
+                snake = [head];
+                apple = new Apple(600, 200);
 
                 document.addEventListener("keydown", handleKeys);
 
@@ -134,7 +140,7 @@
             function gameLoop() {
                 update();
                 draw();
-                test = requestAnimationFrame(gameLoop);
+                requestAnimationFrame(gameLoop);
             }
 
             function update() {
@@ -142,13 +148,29 @@
                 for (let i=snake.length-1; i>0; i-=1) {
                     snake[i].move(snake[i-1]);
                 }
-
+                if (head.isColliding(apple)) {
+                    apple.respawn();
+                    snake.push(new Segment(snake[snake.length-1].x, snake[snake.length-1].y));
+                    snake.push(new Segment(snake[snake.length-1].x, snake[snake.length-1].y));
+                    snake.push(new Segment(snake[snake.length-1].x, snake[snake.length-1].y));
+                    snake.push(new Segment(snake[snake.length-1].x, snake[snake.length-1].y));
+                }
+                for (let i = 10;i<snake.length; i+=1) {
+                    if (head.isColliding(snake[i])) {
+                        snake=[];
+                        head.color = "aquamarine";
+                    }
+                }
             }
 
             // ===== DRAW =====
             function draw() {
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 head.draw(ctx);
+                apple.draw(ctx);
+                for (let i = 1;i<snake.length; i+=1) {
+                    snake[i].draw(ctx);
+                }
             }
 
             // ===== CONTROLS =====
