@@ -39,13 +39,26 @@
             ];
             let canvas, ctx, player;
             let tiles=[];
+            let collected=0;
 
             class Tile {
                 constructor(type, x, y) {
                     this.x = x;
                     this.y = y;
                     this.size = 20;
-                    this.color = "black";
+                    this.type = type;
+                    if (this.type==="wall") {
+                        this.color = "black";
+                    }
+                    if (this.type==="target") {
+                        this.color = "yellow";
+                    }
+                    if (this.type==="door") {
+                        this.color = "red";
+                    }
+                    if (this.type==="exit") {
+                        this.color = "green";
+                    }
                 }
 
                 draw(ctx) {
@@ -70,8 +83,19 @@
                 move(dx, dy) {
                     let collides=false
                     for (let i=0; i<tiles.length; i++) {
-                        if (this.x+dx===tiles[i].x && this.y+dy===tiles[i].y) {
+                        if (this.x+dx===tiles[i].x && this.y+dy===tiles[i].y && tiles[i].type==="wall") {
                             collides=true;
+                        }
+                        if (this.x+dx===tiles[i].x && this.y+dy===tiles[i].y && tiles[i].type==="target") {
+                            tiles[i].color="white";
+                            collected++;
+                        }
+                        if (this.x+dx===tiles[i].x && this.y+dy===tiles[i].y && tiles[i].type==="door" && collected<2) {
+                            collides=true;
+                        }
+                        if (this.x+dx===tiles[i].x && this.y+dy===tiles[i].y && tiles[i].type==="exit") {
+                            this.color="aquamarine";
+                            tiles[i].color="lightgreen";
                         }
                     }
                     if (collides!==true) {
@@ -106,6 +130,15 @@
                         if (rawMaze[row][col]===1) {
                             tiles.push(new Tile("wall", col*20, row*20));
                         }
+                        if (rawMaze[row][col]===2) {
+                            tiles.push(new Tile("target", col*20, row*20));
+                        }
+                        if (rawMaze[row][col]===3) {
+                            tiles.push(new Tile("door", col*20, row*20));
+                        }
+                        if (rawMaze[row][col]===4) {
+                            tiles.push(new Tile("exit", col*20, row*20));
+                        }
                     }
                 }
                 player=(new Player(40,0));
@@ -114,7 +147,6 @@
             }
 
             function gameLoop() {
-                // update();
                 draw();
                 requestAnimationFrame(gameLoop);
             }
@@ -126,10 +158,6 @@
                     tiles[i].draw(ctx);
                 }
             }
-
-            // function update() {
-            //     player.move();
-            // }
 
             function handleKeys(e) {
                 if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(e.key)) {
